@@ -1,0 +1,139 @@
+/*
+Créez les classes suivantes : Dragon et Knight qui héritent de la classe Player et une classe Game.
+
+Dans un seul et même fichier un dragon et un chevalier s'affrontent en se portant des coups de manière aléatoire. La classe Game est composée de deux objets Dragon et Knight de type Player.
+
+Lorsqu'un des deux adversaire n'a plus de vie la partie est terminée et le vainqueur est celui qui possède encore de la vie.
+
+Les classe Dragon et Knight auront :
+
+Attributs
+
+force <- number
+
+life <- number
+
+shot <- statistique sur le nombre de coups portés
+
+name <- string
+
+Méthodes
+
+hit() <- retirer de la vie de manière aléatoire dans le combat
+La classe Game aura les attributs et méthode suivantes :
+
+players : les deux joueurs Dragon & Knigth
+
+run() <- méthode qui lancera le jeu (boucle de jeu)*/
+
+
+
+
+class Player{
+    constructor (force,life,shot,name){
+        this._force = force;
+        this._life = life;
+        this._shot = shot;
+        this._name = name;
+    }
+// get
+
+    get force(){
+        return this._force;
+    }
+
+    get life(){
+        return this._life;
+    }
+    get shot(){
+        return this._shot;
+    }
+
+    get name(){
+        return this._name;
+    }
+
+
+    set force(force){
+        this._force = force;
+    }
+    set life(life){
+        this._life = life;
+    }
+    set shot(shot){
+        this._shot = shot;
+    }
+    set name(name){
+        this._name = name;
+    }
+
+hit(){
+    return getRandomInt(this._force)*getRandomInt(200)
+}
+
+}
+
+class Game {
+    constructor(Player1, Player2) {
+        this._Player1 = Player1;
+        this._Player2 = Player2;
+    }
+
+    run(){
+        let whostart;
+        getRandomInt(1) === 0 ? whostart = "Dragon" : "Knight"
+        whostart === "Dragon" ? Player2._life = Player1.hit() : Player1._life = Player2.hit()
+      
+        if (Player1._life <= 0 ) {
+            console.log(`END GAME, ${Player1._name} est mort !`);
+          }
+          else if (Player2._life <= 0 ) {
+            console.log(`END GAME, ${Player2._name} est mort !`)
+          }
+          else {
+            // boucler jusqu'à la mort d'un joueur ou annoncer le gagnant
+            console.log(`${Player1._name} à ${Player1._life} LifePoints alors que ${Player2._name} à ${Player2._life} LifePoints`)
+            this.run()
+          }
+    }
+}
+   
+
+
+class Dragon extends Player{
+    constructor(force,life,shot,name){
+        super(force,life,shot,name)
+        /*this._force =getRandomInt(15)
+        this._life = getRandomInt(2000)
+        this._shot = getRandomInt(3)*/
+    }
+}
+ 
+class Knight extends Player{
+    constructor(force,life,shot,name){
+        super(force,life,shot,name)
+        /*
+        this._force =getRandomInt(15)
+        this._life = getRandomInt(2000)
+        this._shot = getRandomInt(3)*/
+    }
+}
+
+// Get Random
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+let test = getRandomInt(1);
+
+console.log(test);
+
+// Game
+const Player1 = new Dragon (30,500,1,'Bernard le gros lard')
+const Player2 = new Knight(20,500,1,'jean kevin')
+
+
+console.log(Player1);
+console.log(Player2);
+
+const start = new Game(Player1,Player2);
+console.log(start.run());
